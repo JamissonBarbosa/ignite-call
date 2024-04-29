@@ -1,21 +1,21 @@
 /* eslint-disable prettier/prettier */
-import { Button, Text, TextInput } from "@ignite-ui/react";
-import { ArrowRight } from "phosphor-react";
-import { Form, FormAnnotation } from "./styles";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/router";
+import { Button, Text, TextInput } from '@ignite-ui/react'
+import { ArrowRight } from 'phosphor-react'
+import { Form, FormAnnotation } from './styles'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/router'
 
 const claimUsernameFormSchema = z.object({
   username: z
     .string()
-    .min(3, { message: "Digite usuário válido" })
-    .regex(/^([a-z\\-]+)$/i, { message: "Usuário tem que ter apenas letras" })
+    .min(3, { message: 'Digite usuário válido' })
+    .regex(/^([a-z\\-]+)$/i, { message: 'Usuário tem que ter apenas letras' })
     .transform((usename) => usename.toLocaleLowerCase()),
-});
+})
 
-type ClaimUsernameFormData = z.infer<typeof claimUsernameFormSchema>;
+type ClaimUsernameFormData = z.infer<typeof claimUsernameFormSchema>
 
 export function ClaimUsernameForm() {
   const {
@@ -24,13 +24,13 @@ export function ClaimUsernameForm() {
     formState: { errors },
   } = useForm<ClaimUsernameFormData>({
     resolver: zodResolver(claimUsernameFormSchema),
-  });
+  })
 
-  const router = useRouter();
+  const router = useRouter()
 
   async function handleClaimUsernameForm(data: ClaimUsernameFormData) {
-    const { username } = data;
-    await router.push(`/register?username=${username}`);
+    const { username } = data
+    await router.push(`/register?username=${username}`)
   }
 
   return (
@@ -40,7 +40,7 @@ export function ClaimUsernameForm() {
           size="sm"
           prefix="ignite.com/"
           placeholder="seu-usuario"
-          {...register("username")}
+          {...register('username')}
           crossOrigin={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
@@ -55,9 +55,9 @@ export function ClaimUsernameForm() {
         <Text size="sm">
           {errors.username
             ? errors.username.message
-            : "Digite o nome do usuário"}
+            : 'Digite o nome do usuário'}
         </Text>
       </FormAnnotation>
     </>
-  );
+  )
 }
